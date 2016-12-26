@@ -544,7 +544,7 @@ regex_code = re.compile(
     '(' + META + '|' + DISABLED_META + r'|````)|(``(?P<t>.+?)``(?::(?P<c>[a-zA-Z][_a-zA-Z\-\d]*)(?:\[(?P<p>[^\]]*)\])?)?)',
     re.S)
 regex_strong = re.compile(r'\*\*(?P<t>[^\s*]+( +[^\s*]+)*)\*\*')
-regex_del = re.compile(r'~~(?P<t>[^\s*]+( +[^\s*]+)*)~~')
+regex_del = re.compile(r'~~(?P<t>[^\s~]+( +[^\s~]+)*)~~')
 regex_em = re.compile(r"''(?P<t>([^\s']| |'(?!'))+)''")
 regex_num = re.compile(r"^\s*[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?\s*$")
 regex_list = re.compile('^(?:(?:(#{1,6})|(?:(\.+|\++|\-+)(\.)?))\s*)?(.*)$')
@@ -910,6 +910,9 @@ def render(text,
 
     >>> render("**bold** ''italic'' ~~strikeout~~")
     '<p><strong>bold</strong> <em>italic</em> <del>strikeout</del></p>'
+    
+    >>> render("multiple markups: **bold** ''italic'' ~~strikeout~~ **bold** ''italic'' ~~strikeout~~")
+    '<p>multiple markups: <strong>bold</strong> <em>italic</em> <del>strikeout</del> <strong>bold</strong> <em>italic</em> <del>strikeout</del></p>'
 
     >>> render("this is ``a red on yellow text``:c[#FF0000:#FFFF00]")
     '<p>this is <span style="color: #FF0000;background-color: #FFFF00;">a red on yellow text</span></p>'
