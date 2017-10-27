@@ -1683,17 +1683,30 @@ class UL(DIV):
     """
     UL Component.
 
-    If subcomponents are not LI-components they will be wrapped in a LI
+    If subcomponents are not LI,OL or UL -components they will be wrapped in a LI
+
+
+    >>> UL("appease", LI("them"), "with", LI("a shrubbery"), UL("Ni","Ni","Ni")).xml()
+    '<ul><li>appease</li><li>them</li><li>with</li><li>a shrubbery</li><ul><li>Ni</li><li>Ni</li><li>Ni</li></ul></ul>'
 
     """
 
     tag = 'ul'
 
     def _fixup(self):
-        self._wrap_components(LI, LI)
+        self._wrap_components((LI,UL,OL), LI)
 
 
 class OL(UL):
+    """
+    OL Component.
+
+    If subcomponents are not LI,OL or UL -components they will be wrapped in a LI
+
+    >>> OL("appease", LI("them"), "with", LI("a shrubbery"), OL("Ni","Ni","Ni")).xml()
+    '<ol><li>appease</li><li>them</li><li>with</li><li>a shrubbery</li><ol><li>Ni</li><li>Ni</li><li>Ni</li></ol></ol>'
+
+    """
 
     tag = 'ol'
 
@@ -2854,3 +2867,4 @@ def ASSIGNJS(**kargs):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
